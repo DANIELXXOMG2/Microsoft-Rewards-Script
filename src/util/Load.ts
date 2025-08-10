@@ -2,6 +2,7 @@ import { BrowserContext, Cookie } from 'rebrowser-playwright'
 import { BrowserFingerprintWithHeaders } from 'fingerprint-generator'
 import fs from 'fs'
 import path from 'path'
+import * as JSONC from 'jsonc-parser'
 
 
 import { Account } from '../interface/Account'
@@ -11,17 +12,17 @@ let configCache: Config
 
 export function loadAccounts(): Account[] {
     try {
-        let file = 'accounts.json'
+        let file = 'accounts.jsonc'
 
         // If dev mode, use dev account(s)
         if (process.argv.includes('-dev')) {
-            file = 'accounts.dev.json'
+            file = 'accounts.dev.jsonc'
         }
 
         const accountDir = path.join(__dirname, '../', file)
         const accounts = fs.readFileSync(accountDir, 'utf-8')
 
-        return JSON.parse(accounts)
+        return JSONC.parse(accounts)
     } catch (error) {
         throw new Error(error as string)
     }
@@ -33,10 +34,10 @@ export function loadConfig(): Config {
             return configCache
         }
 
-        const configDir = path.join(__dirname, '../', 'config.json')
+        const configDir = path.join(__dirname, '../', 'config.jsonc')
         const config = fs.readFileSync(configDir, 'utf-8')
 
-        const configData = JSON.parse(config)
+        const configData = JSONC.parse(config)
         configCache = configData // Set as cache
 
         return configData

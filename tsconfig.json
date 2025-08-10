@@ -64,8 +64,8 @@
     },
     "include": [
         "src/**/*.ts",
-        "src/accounts.json",
-        "src/config.json",
+        "src/accounts.jsonc",
+        "src/config.jsonc",
         "src/functions/queries.json"
     ],
     "exclude": [

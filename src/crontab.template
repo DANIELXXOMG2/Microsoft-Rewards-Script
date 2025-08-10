@@ -1,2 +1,10 @@
+# Environment for cron jobs
+SHELL=/bin/bash
+TZ=${TZ}
+EXPECTED_DAILY_RUNS=${EXPECTED_DAILY_RUNS}
+SKIP_RANDOM_SLEEP=${SKIP_RANDOM_SLEEP}
+MIN_SLEEP_MINUTES=${MIN_SLEEP_MINUTES}
+MAX_SLEEP_MINUTES=${MAX_SLEEP_MINUTES}
+
 # Run automation according to CRON_SCHEDULE; redirect both stdout & stderr to Docker logs
-${CRON_SCHEDULE} TZ=${TZ} /bin/bash /usr/src/microsoft-rewards-script/src/run_daily.sh >> /proc/1/fd/1 2>&1
+${CRON_SCHEDULE} /bin/bash /usr/src/microsoft-rewards-script/src/run_daily.sh >> /proc/1/fd/1 2>&1

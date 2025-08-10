@@ -2,8 +2,12 @@ sessions/
 dist/
 node_modules/
 package-lock.json
-accounts.json
+# accounts.jsonc
+.stfolder/
 notes
 accounts.dev.json
 accounts.main.json
 .DS_Store
+.trae/
+src/accounts.jsonc
+src/config.jsonc

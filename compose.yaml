@@ -6,16 +6,18 @@ services:
 
     # Volume mounts: Specify a location where you want to save the files on your local machine.
     volumes:
-      - ./src/accounts.json:/usr/src/microsoft-rewards-script/dist/accounts.json:ro
-      - ./src/config.json:/usr/src/microsoft-rewards-script/dist/config.json:ro
+      - ./src/accounts.jsonc:/usr/src/microsoft-rewards-script/dist/accounts.jsonc:ro
+      - ./src/config.jsonc:/usr/src/microsoft-rewards-script/dist/config.jsonc:ro
       - ./sessions:/usr/src/microsoft-rewards-script/dist/browser/sessions # Optional, saves your login session
-
+      - ./logs:/usr/src/microsoft-rewards-script/logs # Mount logs directory
+  
     environment:
-      TZ: "America/Toronto" # Set your timezone for proper scheduling
+      TZ: "America/Bogota" # Set your timezone for proper scheduling
       NODE_ENV: "production"
-      CRON_SCHEDULE: "0 7,16,20 * * *" # Customize your schedule, use crontab.guru for formatting
+      CRON_SCHEDULE: "0 7,17 * * *" # Twice per day: 07:00 and 17:00 (local TZ)
       RUN_ON_START: "true" # Runs the script on container startup
-
+      EXPECTED_DAILY_RUNS: "2" # Enforce exactly two successful runs per day
+  
       # Start-time randomization (uncomment to customize or disable)
       #MIN_SLEEP_MINUTES: "5"
       #MAX_SLEEP_MINUTES: "50"
