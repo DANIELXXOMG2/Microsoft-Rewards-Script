@@ -1,0 +1,65 @@
+# Use a slim context: include only what Docker needs to build the image
+
+# === VCS ===
+.git
+.gitignore
+.gitattributes
+.github/
+
+# === IDE / Editors ===
+.vscode/
+.idea/
+.trae/
+
+# === Dependencies (reinstalled in image) ===
+node_modules/
+.yarn/
+.pnp.*
+
+# === Build output (rebuilt in image) ===
+dist/
+build/
+.out/
+.next/
+
+# === Logs and runtime data ===
+logs/
+*.log
+*.pid
+*.pid.lock
+.cache/
+.temp/
+.tmp/
+
+# === OS junk ===
+.DS_Store
+Thumbs.db
+$RECYCLE.BIN/
+
+# === Local env & secrets (should be provided via env vars / docker secrets) ===
+.env
+.env.*
+*.pem
+*.key
+*.crt
+*.p12
+
+# === Project-specific sensitive config ===
+src/accounts.jsonc
+src/config.jsonc
+accounts.dev.json
+accounts.main.json
+execution_log.json
+execution_log.ndjson
+
+# === Misc ===
+notes
+notes.*
+TODO.md
+.docker/
+
+# Keep files required by Dockerfile
+# - package.json and package-lock.json (conditionally used)
+# - src/ (source code)
+# - entrypoint.sh, src/run_daily.sh, src/crontab.template, compose.yaml, Dockerfile
+# The above are NOT ignored so they remain in the context.

@@ -1,0 +1,45 @@
+// accounts.example.jsonc
+//
+// This file is a template in JSONC format (JSON with comments).
+// You CAN keep comments here; they are ignored at runtime.
+//
+// How to use:
+// 1) Copy or rename this file to accounts.jsonc
+// 2) Fill each account with your real credentials
+// 3) For Docker, mount src/accounts.jsonc into the container as documented in compose.yaml
+//
+// Notes about proxy:
+// - Browser proxy is enabled when proxy.url is non-empty. It applies to Playwright browser traffic.
+// - Axios proxy is controlled by proxy.proxyAxios (true = use proxy for HTTP API calls like Google Trends / Bing suggestions).
+// - If you don’t need a proxy, set url to "" and proxyAxios to false.
+[
+  {
+    // Primary account (no proxy)
+    "email": "your_email@outlook.com",
+    "password": "your_strong_password",
+    "proxy": {
+      // When true, Axios (HTTP requests) will use the proxy agent
+      "proxyAxios": false,
+      // Leave url empty to disable browser proxy altogether
+      "url": "",
+      // Keep 0 if url is empty (ignored)
+      "port": 0,
+      // Optional credentials for proxy auth (ignored if url is empty)
+      "username": "",
+      "password": ""
+    }
+  },
+  {
+    // Secondary account (HTTP proxy example)
+    "email": "another_account@outlook.com",
+    "password": "your_password_here",
+    "proxy": {
+      "proxyAxios": true,
+      // Supported schemes include http, https, and socks variants (e.g., socks5)
+      "url": "http://proxy.example.com",
+      "port": 8080,
+      "username": "proxyUser",
+      "password": "proxyPass"
+    }
+  }
+]

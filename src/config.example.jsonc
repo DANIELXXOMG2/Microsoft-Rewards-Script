@@ -1,0 +1,113 @@
+// config.example.jsonc
+//
+// This file is a template in JSONC format (JSON with comments).
+// You CAN keep comments; they are ignored at runtime.
+// Copy/rename to src/config.jsonc and adjust to your environment.
+//
+// Key tips:
+// - Set headless=true for Docker or unattended environments.
+// - clusters controls how many parallel workers (processes) you want.
+// - parallel controls desktop+mobile concurrency per account.
+// - globalTimeout accepts number (ms) or strings like "30s".
+// - searchSettings.searchDelay.min/max accept ms or strings (e.g., "3min").
+// - webhook.enabled must be true AND webhook.url must be set to send Discord messages.
+{
+  // Base URL for Microsoft Rewards
+  "baseURL": "https://rewards.bing.com",
+
+  // Directory name to store sessions/fingerprints (under dist/browser/<sessionPath>)
+  "sessionPath": "sessions",
+
+  // Run browser headless (recommended true for Docker)
+  "headless": true,
+
+  // Run desktop and mobile flows concurrently per account
+  "parallel": true,
+
+  // If false and there are 0 earnable points for the day, skips work early
+  "runOnZeroPoints": false,
+
+  // Number of worker processes to spawn (1 per chunk of accounts)
+  // If you have many accounts, you can increase this to parallelize batches
+  "clusters": 1,
+
+  // Persist and reuse device fingerprint between runs
+  // Set to true to reduce fingerprint drift; false to regenerate every run
+  "saveFingerprint": {
+    "mobile": false,
+    "desktop": false
+  },
+
+  // Toggle which tasks the bot will execute
+  "workers": {
+    // Complete the daily set (3 tiles)
+    "doDailySet": true,
+    // Complete additional promotions on the dashboard
+    "doMorePromotions": true,
+    // Complete punch cards when available
+    "doPunchCards": true,
+    // Perform desktop searches
+    "doDesktopSearch": true,
+    // Perform mobile searches (browser + app endpoints)
+    "doMobileSearch": true,
+    // Do daily check-in via the mobile API
+    "doDailyCheckIn": true,
+    // Do Read to Earn activity via the mobile API
+    "doReadToEarn": true
+  },
+
+  // Use queries.jsonc from the repo instead of local file when false
+  "searchOnBingLocalQueries": false,
+
+  // Global action timeout for Playwright operations; number (ms) or string like "30s"
+  "globalTimeout": "30s",
+
+  // Search behavior customization
+  "searchSettings": {
+    // If true, generate queries using your country code (from profile)
+    // If false, use default EN-US queries
+    "useGeoLocaleQueries": false,
+
+    // Simulate human behavior by scrolling random positions in results
+    "scrollRandomResults": true,
+
+    // Optionally click random results to simulate browsing
+    "clickRandomResults": true,
+
+    // Delay between searches; can be numbers in ms or strings like "3min"
+    "searchDelay": {
+      "min": "3min",
+      "max": "5min"
+    },
+
+    // Number of times to retry mobile search if points remain uncollected
+    "retryMobileSearchAmount": 2
+  },
+
+  // Function names to omit from local console logs
+  "logExcludeFunc": [
+    "SEARCH-CLOSE-TABS"
+  ],
+
+  // Function names to omit from webhook logs
+  "webhookLogExcludeFunc": [
+    "SEARCH-CLOSE-TABS"
+  ],
+
+  // Proxy preferences for outbound HTTP requests done via Axios
+  // If true, requests will go through the per-account proxy when available
+  "proxy": {
+    // Apply proxy to Google Trends request (query generation)
+    "proxyGoogleTrends": true,
+    // Apply proxy to Bing suggestions request (related terms)
+    "proxyBingTerms": true
+  },
+
+  // Discord webhook configuration
+  "webhook": {
+    // Enable Discord webhook notifications
+    "enabled": false,
+    // Discord webhook URL (keep empty when disabled)
+    "url": ""
+  }
+}
